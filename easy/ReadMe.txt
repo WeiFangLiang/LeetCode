@@ -8,3 +8,4 @@
 4、Arrays.toString(数组名) 将数组转成字符串，Arrays.binarySearch(数组名, value) 二分查找
 5、s.toCharArray()   将字符串 s 转为字符数组
 6、Arrays.equals(arr1, arr2)  比较俩数组是否相等
+7、Arrays.asList(v1,v2,v3) 参数最好是引用类型，返回一个[v1,v2,v3] 的数组List
