@@ -9,3 +9,4 @@
 5、s.toCharArray()   将字符串 s 转为字符数组
 6、Arrays.equals(arr1, arr2)  比较俩数组是否相等
 7、Arrays.asList(v1,v2,v3) 参数最好是引用类型，返回一个[v1,v2,v3] 的数组List
+8、System.arraycopy(oldArray, 0, newArray, 0, oldArray.length);
