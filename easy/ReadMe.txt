@@ -10,3 +10,4 @@
 6、Arrays.equals(arr1, arr2)  比较俩数组是否相等
 7、Arrays.asList(v1,v2,v3) 参数最好是引用类型，返回一个[v1,v2,v3] 的数组List
 8、System.arraycopy(oldArray, 0, newArray, 0, oldArray.length);
+9、如果调用compare方法大于0，就把前一个数和后一个数交换，也就是把大的数放后面了，即所谓的升序。
