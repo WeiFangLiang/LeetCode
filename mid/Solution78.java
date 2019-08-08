@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * 子集
- * 		windliang的解法挺好
+ * 		windliang和liweiwei1419的解法挺好
  * @author WeiFangLiang
  *
  */
