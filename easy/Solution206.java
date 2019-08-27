@@ -1,35 +1,30 @@
 package com.LeetCode.easy;
+
 /**
  * 反转链表
  * 			小结：
  * 					1、前几次代码都是死循环
+ * 					2、先从纸上写写逻辑
  * @author WeiFangLiang
  *
  */
 public class Solution206 {
+	//超过86%，55%
 	public static ListNode reverseList(ListNode head) {
-        // 1 2 3 4 5 null 
-		ListNode i = head;
-		if(i == null) {
-			return null;
-		}
-		ListNode j = head.next;
-		if(j == null) {
-			return head;
-		}
-		ListNode k = head.next.next;
-		head.next = null;
-		while(k != null) {
-//			j.next = i;
-//			i.next = null;  这两句就死循环了,而且每次都断，最后肯定残缺
-			j.next = i;
-			i = j;
-			j = k;
-			k = k.next;
-		}
-		j.next = i;
-		head = j;
-		return head;
+		if (head == null || head.next == null) return head;
+        ListNode p = head;
+        ListNode q = head.next;
+        ListNode r = q.next;
+        p.next = null; //先断链
+        while(r != null) {
+        	q.next = p;
+        	p = q;
+        	q = r;
+        	r = r.next;
+        }
+        q.next = p;  //单独处理最后一个节点
+        head = q;
+        return head;
     }
 	public static void main(String[] args) {
 		ListNode node5 = new ListNode(5);
