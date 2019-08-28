@@ -26,6 +26,19 @@ public class Solution206 {
         head = q;
         return head;
     }
+	//王铮大神版
+	public static ListNode reverseList2(ListNode head) {
+		ListNode cur = head;
+		ListNode pre = null;
+		while(cur != null) {
+			ListNode next = cur.next;
+			cur.next = pre;
+			pre = cur;
+			cur = next;
+		}
+		return pre;
+	}
+	
 	public static void main(String[] args) {
 		ListNode node5 = new ListNode(5);
 		ListNode node4 = new ListNode(4);
