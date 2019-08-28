@@ -7,7 +7,7 @@ package com.LeetCode.mid;
  *
  */
 public class Solution19 {
-	
+	//2ms
 	public ListNode removeNthFromEnd(ListNode head, int n) {
 	        //1-->2-->3-->4-->5-->6-->7  n=5     ===>     1-->2-->4-->5-->6-->7  
 		int size = 1;
@@ -32,4 +32,27 @@ public class Solution19 {
 		now.next = now.next.next;
 		return head;
 	}
+	// 王铮大神版  1ms  99.8%，86%
+	public ListNode removeNthFromEnd2(ListNode head, int n) {
+        ListNode fast = head;
+		 int i = 1;
+		 while(fast != null && i < n) {
+			 fast = fast.next;
+			 ++i;
+		 }
+		 if (fast == null) return head;
+		 ListNode slow = head;
+		 ListNode pre = null;
+		 while(fast.next != null) {
+			 fast = fast.next;
+			 pre = slow;
+			 slow = slow.next;
+		 }
+		 if(pre == null) {
+			 head = head.next;
+		 }else {
+			 pre.next = pre.next.next;
+		 }
+		 return head;
+    }
 }
