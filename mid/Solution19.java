@@ -40,16 +40,16 @@ public class Solution19 {
 			 fast = fast.next;
 			 ++i;
 		 }
-		 if (fast == null) return head;
-		 ListNode slow = head;
-		 ListNode pre = null;
+		 if (fast == null) return head; //比如链表就3个节点，删除倒数第4个，fast就是 null
+		 ListNode slow = head;  // slow 就是要删除的节点
+		 ListNode pre = null;  // slow 的前驱节点
 		 while(fast.next != null) {
 			 fast = fast.next;
 			 pre = slow;
 			 slow = slow.next;
 		 }
-		 if(pre == null) {
-			 head = head.next;
+		 if(pre == null) {  //说明上面的while没执行
+			 head = head.next; //此时的slow就是head
 		 }else {
 			 pre.next = pre.next.next;
 		 }
