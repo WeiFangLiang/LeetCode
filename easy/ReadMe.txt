@@ -11,3 +11,4 @@
 7、Arrays.asList(v1,v2,v3) 参数最好是引用类型，返回一个[v1,v2,v3] 的数组List
 8、System.arraycopy(oldArray, 0, newArray, 0, oldArray.length);
 9、如果调用compare方法大于0，就把前一个数和后一个数交换，也就是把大的数放后面了，即所谓的升序。
+10、String的 indexOf（int ch），传入字符对应的UniCode编码，然后去从前向后找到该字符在字符串中第一次出现处的索引
