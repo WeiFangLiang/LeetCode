@@ -15,3 +15,4 @@
 11、(count & 1) == 0  最牛逼的判奇偶
 12、maxHeap = new PriorityQueue<>((x, y) -> y - x);   降序---大顶堆
 13、Comparator：(x, y) return x - y  就是升序，return y - x 就是降序
+14、异或的用法：easy---Solution136
