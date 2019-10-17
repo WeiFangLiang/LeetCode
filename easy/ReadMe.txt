@@ -16,3 +16,4 @@
 12、maxHeap = new PriorityQueue<>((x, y) -> y - x);   降序---大顶堆
 13、Comparator：(x, y) return x - y  就是升序，return y - x 就是降序
 14、异或的用法：easy---Solution136
+15、String[] strings = s.split("\\s+"); 字符串s，中间无论多少处空格，或者每处空格数量不一样，都可以分割
