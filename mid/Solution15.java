@@ -1,7 +1,7 @@
 package com.LeetCode.mid;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -14,38 +14,68 @@ import java.util.List;
  *
  */
 public class Solution15 {
-	public static List<List<Integer>> threeSum(int[] nums) {
-		int size = nums.length;
-        if(size < 3) {
-        	return null;
-        }
-       // nums = [-1, 0, 1, 2, -1, -4]， [ [-1, 0, 1],   [-1, -1, 2] ]
-        List<List<Integer>> list = new LinkedList<>(); // list是外面的数组，数组元素是符合结果的 小数组
-        int i = 0;
-        for(;i < size-2;i++) {
-        	int j = i + 1;
-        	for(;j < size-1;j++) {
-        		int k =  j + 1; 
-        		for(;k < size;k++) {
-        			if((nums[i] + nums[j] + nums[k]) == 0) {
-        				List<Integer> list0 = new ArrayList<>(3);
-        				list0.add(nums[i]);
-        				list0.add(nums[j]);
-        				list0.add(nums[k]);
-        				list.add(list0);
-        			}
-        		}
-        	}
-        }
-        return list;
+	//1、暴力三重循环     5800毫秒，超时
+	public List<List<Integer>> threeSum1(int[] nums) {
+		Arrays.sort(nums);
+		List<List<Integer>> result = new ArrayList<>();
+		for(int i = 0;i < nums.length;i++) {
+			int target = -nums[i];
+			for(int j = i + 1;j < nums.length;j++) {
+				for(int k = j + 1;k < nums.length;k++) {
+					if(target == nums[j] + nums[k]) {
+						ArrayList<Integer> tmp = new ArrayList<>();
+						tmp.add(nums[i]);
+						tmp.add(nums[j]);
+						tmp.add(nums[k]);
+						if(!result.contains(tmp)) {	//这样的去重可以说很无脑了						
+							result.add(tmp);
+						}
+					}
+				}
+			}
+		}
+		return result;
     }
-	public static void main(String[] args) {
-		int[] nums = {-7,-10,-1,3,0,-7,-9,-1,10,8,-6,4,14,-8,9,-15,0,-4,-5,9,11,3,
-				-5,-8,2,-6,-14,7,-14,10,5,-6,7,11,4,-7,11,11,7,7,-4,-14,-12,-13,-14,4,
-				-13,1,-15,-2,-12,11,-14,-2,10,3,-1,11,-5,1,-2,7,2,-10,-5,-8,-10,14,10,13,
-				-2,-9,6,-7,-7,7,12,-5,-14,4,0,-11,-8,2,-6,-13,12,0,5,-15,8,-12,-1,-4,-15,
-				2,-5,-9,-7,12,11,6,10,-6,14,-12,9,3,-10,10,-8,-2,6,-9,7,7,-7,4,-8,5,-4,8,0,3,11,0,-10,-9};
-		List<List<Integer>> result = threeSum(nums);
-		
+	//2、hash表
+	
+	//3、左右指针    固定nums[i]   左右指针向中间逼近
+	public List<List<Integer>> threeSum2(int[] nums) {
+		Arrays.sort(nums);
+		List<List<Integer>> result = new ArrayList<>();
+		int len = nums.length;
+		if(nums == null || len < 3) {
+			return result;
+		}
+		for(int i = 0;i < nums.length;i++) {
+			if(nums[i] > 0) {
+				break;
+			}
+			if(i > 0 && nums[i] == nums[i - 1]) {
+				continue;
+			}
+			int target = -nums[i];
+			for(int l = i + 1, r = nums.length - 1;l < r; ) {//l：左指针    r：右指针
+				if(target == nums[l] + nums[r]) {//符合和为0
+					ArrayList<Integer> tmp = new ArrayList<>();
+					tmp.add(nums[i]);
+					tmp.add(nums[l]);
+					tmp.add(nums[r]);
+					result.add(tmp);
+					while(l < r && nums[l] == nums[l + 1]) {//如果和为0，考虑去重
+						l++;//只要左指针与下一个元素相等，就一直右移动左指针
+					}
+					while(l < r && nums[r] == nums[r - 1]) {
+						r--;//只要右指针与上一个元素相等，就一直左移动右指针
+					}
+					l++;
+					r--;
+				}else if(target < nums[l] + nums[r]) {//左右指针和太大，左移动右指针，指向更小的数
+					r--;
+				}else {
+					l++;
+				}
+			}
+		}
+		return result;
 	}
 }
