@@ -14,7 +14,7 @@ import java.util.List;
  *
  */
 public class Solution15 {
-	//1、暴力三重循环     5800毫秒，超时
+	//1、暴力三重循环     最长的一个用例5800毫秒，超时
 	public List<List<Integer>> threeSum1(int[] nums) {
 		Arrays.sort(nums);
 		List<List<Integer>> result = new ArrayList<>();
