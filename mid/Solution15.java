@@ -50,7 +50,7 @@ public class Solution15 {
 			if(nums[i] > 0) {
 				break;
 			}
-			if(i > 0 && nums[i] == nums[i - 1]) {
+			if(i > 0 && nums[i] == nums[i - 1]) {//和前面的target一样，说明已经算过了
 				continue;
 			}
 			int target = -nums[i];
