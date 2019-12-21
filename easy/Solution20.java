@@ -4,6 +4,7 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Stack;
 /**
  * 匹配括号：
  * 		小结：
@@ -55,15 +56,26 @@ public class Solution20 {
 	public static boolean isValid1(String s) {
 		int length;
 		do {
-			length = s.length();
+			length = s.length();//先记录原字符串长度
 			s = s.replace("()", "").replace("{}", "").replace("[]", "");  //精华所在！，只要有配对的括号，全部消掉！
-		}while(length != s.length()); //上一步使得长度改变 和 length 不一致
+		}while(length != s.length()); //只要上一步发生替换，就会使得字符串长度减小 和 length 不一致，意思是，只要发生替换，就循环do里的内容
 			return s.length() == 0;
 	}
-	
-	public static void main(String[] args) {
-		String s ="()";
-		boolean r = isValid1(s);
-		System.out.println(r);
+	//国际站上的高票答案	94%  88%
+	public static boolean isValid2(String s) {
+		Stack<Character> stack = new Stack<>();
+		for(char c : s.toCharArray()) {//遍历一遍即可
+			if(c == '(' || c == '[' || c == '{') {//左括号入栈
+				stack.push(c);
+			}else if(c == ')'){//遇到右括号
+				if(stack.isEmpty() || stack.pop() != '(') return false;//栈为空或者栈顶不匹配
+			}else if(c == ']'){
+				if(stack.isEmpty() || stack.pop() != '[') return false;
+			}else if(c == '}'){
+				if(stack.isEmpty() || stack.pop() != '{') return false;
+			}
+		}
+		return stack.isEmpty();
 	}
+	
 }
