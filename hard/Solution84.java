@@ -32,7 +32,7 @@ public class Solution84 {
 		return maxArea;
 	}
 	
-	//3.栈     栈底到栈顶  元素递增     每一个栈中的元素，它的下方元素既是它的左边界
+	//3.栈     栈底到栈顶  元素递增     每一个栈中的元素，它的下方元素既是它的左边界		84%  84%
 	public int largestRectangleArea3(int[] heights) {
 		Stack<Integer> stack = new Stack<>(); //存储下标
 		stack.push(-1); //类似哨兵，数组的左边界
@@ -43,7 +43,8 @@ public class Solution84 {
 				//pop在前，所以 i - stack.peek() 的peek宽度多算了一步，需要减去1
 				maxArea = Math.max(maxArea, heights[stack.pop()] * (i - stack.peek() - 1));
 			}
-			stack.push(i);//只有当前元素高度大于栈顶元素高度，则入栈
+			//将栈中高度 <= heights[i]的踢出去，再把 i 入栈
+			stack.push(i);//或者当前元素高度大于栈顶元素高度，不进行while,直接入栈
 		}
 		while (stack.peek() != -1)
 			maxArea = Math.max(maxArea, heights[stack.pop()] * (heights.length - stack.peek() -1));
