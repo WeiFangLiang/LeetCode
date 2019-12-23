@@ -1,7 +1,6 @@
 package com.LeetCode.hard;
 
-import java.util.ArrayDeque;
-import java.util.Arrays;
+import java.util.LinkedList;
 
 /**
  * 活动窗口最大值(不会)
@@ -11,46 +10,36 @@ import java.util.Arrays;
  *
  */
 public class Solution239 {
-	//官方解，有些细节不明白
-	ArrayDeque<Integer> deq = new ArrayDeque<Integer>();
-	int [] nums;
-	
-	public void clean_deque(int i, int k) { //最难理解的就是这个函数
-
-		if (!deq.isEmpty() && deq.getFirst() == i - k) //？
-			deq.removeFirst();
-		
-		while (!deq.isEmpty() && nums[i] > nums[deq.getLast()])                   
-			deq.removeLast();
-	}
-	
+	//1.暴力		34%   94%
  	public int[] maxSlidingWindow(int[] nums, int k) {
- 		    int n = nums.length;
- 		    if (n * k == 0) return new int[0];
- 		    if (k == 1) return nums;
-
- 		    this.nums = nums;
- 		    int max_idx = 0;  //记录最大值
- 		    for (int i = 0; i < k; i++) {
- 		    	clean_deque(i, k);
- 		        deq.addLast(i);  //队列存的是数组下标
- 		      if (nums[i] > nums[max_idx]) max_idx = i;
- 		    }
- 		    int [] output = new int[n - k + 1];
- 		    output[0] = nums[max_idx];
-
- 		    // build output
- 		    for (int i  = k; i < n; i++) {
- 		      clean_deque(i, k); //每次clean队列之后，最大值的索引都会到队首
- 		      deq.addLast(i);
- 		      output[i - k + 1] = nums[deq.getFirst()];//将最大值放入结果数组
- 		    }
- 		    return output;
- 		  }
- 	public static void main(String[] args) {
- 		Solution239 ss = new Solution239();
- 		int[] nums = {7,2,4};
- 		int[] output = ss.maxSlidingWindow(nums,2);
- 		System.out.println(Arrays.toString(output));
-	}
+ 		if(nums == null || nums.length < k || k < 1) return new int[0];
+ 		int len = nums.length;
+	    int[] res = new int[len - k + 1];//存放结果
+	    for(int i = 0;i < len - k + 1;i++) {//挨个遍历数组元素
+	    	int max = Integer.MIN_VALUE;
+	    	for(int j = i;j < i +  k;j++) {//从当前位置往后遍历k个元素，也就是遍历当前窗口
+	    		max = Math.max(max, nums[j]);
+	    	}
+	    	res[i] = max;
+	    }
+	    return res;
+ 	}
+ 	//2.双端队列：首到尾严格递减		80%  96%
+ 	public int[] maxSlidingWindow1(int[] nums, int k) {
+ 		if(nums == null || nums.length < k || k < 1) return new int[0];
+ 		LinkedList<Integer> qmax = new LinkedList<>();//存储数组下标
+ 		int[] res = new int[nums.length - k + 1];
+ 		int index = 0;
+ 		for(int i = 0;i < nums.length;i++) {
+ 			//如果不为空，就进行大小关系判断
+ 			while(!qmax.isEmpty() && nums[qmax.peekLast()] <= nums[i]) {
+ 				qmax.pollLast();//只要是<=当前元素的，全部删掉
+ 			}
+ 			qmax.addLast(i);
+ 			if(qmax.peekFirst() == i - k) qmax.pollFirst(); //如果队列中最早的下标满足过时条件，删掉 
+ 			//数组下标遍历到 >= k- 1时，才会形成窗口，产生一个该窗口的最大值
+ 			if(i >= k - 1) res[index++] = nums[qmax.peekFirst()];
+ 		}
+ 		return res;
+ 	}
 }
