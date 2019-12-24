@@ -24,7 +24,7 @@ public class Solution239 {
 	    }
 	    return res;
  	}
- 	//2.双端队列：首到尾严格递减		80%  96%
+ 	//2.双端队列：队首是当前窗口最大值		80%  96%
  	public int[] maxSlidingWindow1(int[] nums, int k) {
  		if(nums == null || nums.length < k || k < 1) return new int[0];
  		LinkedList<Integer> qmax = new LinkedList<>();//存储数组下标
