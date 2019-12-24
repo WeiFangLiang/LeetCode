@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * 有效的字母异位词
+ * 有效的字母异位词   异位词：字母出现次数一样，但是顺序不一样
  * @author WeiFangLiang
  *
  */
@@ -34,23 +34,26 @@ public class Solution242 {
 	public static boolean isAnagram1(String s, String t) {
 		char[] cs = s.toCharArray();  //字符串转数组
 		Arrays.sort(cs); //排序
-		//String css = Arrays.toString(cs); //再转回字符串
 		char[] ct = t.toCharArray();
 		Arrays.sort(ct);
-		//String ctt = Arrays.toString(ct);  //其实无需再转回字符串
-		
-		//return css.equals(ctt);
 		return Arrays.equals(cs, ct);  //比较俩数组是否相等
 	}
-	//方法三、利用Map 计数，看官方解
-//	public static boolean isAnagram2(String s, String t) {
-//		
-//	}
-	
-	public static void main(String[] args) {
-		String s = "a";
-		String t = "b";
-		boolean flag = isAnagram1(s,t);
-		System.out.println(flag);
+	//方法三、 计数，官方解
+	public static boolean isAnagram2(String s, String t) {
+		if (s.length() != t.length()) {
+	        return false;
+	    }
+	    int[] counter = new int[26];//对应26个英文字母
+	    for (int i = 0; i < s.length(); i++) {
+	        counter[s.charAt(i) - 'a']++;//遍历s，就将相应字母的计数 +1
+	        counter[t.charAt(i) - 'a']--;//遍历t，就将相应字母的计数 -1
+	    }
+	    for (int count : counter) {//遍历计数器
+	        if (count != 0) { //如果两个字符串的对应的字母同样多，那计数器数组应该全为0
+	            return false;
+	        }
+	    }
+	    return true;
 	}
+	
 }
