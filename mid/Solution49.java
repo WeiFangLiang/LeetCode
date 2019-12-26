@@ -17,6 +17,8 @@ public class Solution49 {
 		for(String s : strs) {  //遍历字符串数组，排序该字符串，若是异位词，则处理之后会落到同一个key中
 			char[] cs = s.toCharArray();
 			Arrays.sort(cs);
+			//雷区！！！！  下面一行不能用cs.toString()，因为这是cs数组地址的字符串表示，所以每个cs数组的key都不一样
+			//而String.valueOf(cs)会将cs数组的内容转为字符串，这才是我们想要的
 			String key = String.valueOf(cs); //s---cs---key都是指的同一个字符串
 			if(!map.containsKey(key)) {
 				ArrayList<String> tmp = new ArrayList<String>();
