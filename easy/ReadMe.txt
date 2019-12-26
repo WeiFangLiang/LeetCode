@@ -17,3 +17,4 @@
 13、Comparator：(x, y) return x - y  就是升序，return y - x 就是降序
 14、异或的用法：easy---Solution136
 15、String[] strings = s.split("\\s+"); 字符串s，中间无论多少处空格，或者每处空格数量不一样，都可以分割
+16、char[] cs; cs.toString()是将cs的地址转为字符串     String.valueOf(cs)试讲cs的内容转为字符串
