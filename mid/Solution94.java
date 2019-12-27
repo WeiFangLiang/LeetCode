@@ -31,7 +31,7 @@ public class Solution94 {
         		cur = cur.left;//指向左子节点
         	}
         	//cur为null，说明左边界到头了
-        	cur = stack.pop();//开始出栈
+        	cur = stack.pop();//开始出栈，最开始出栈的一定是最左节点
         	res.add(cur.val);//记录出栈的节点值
         	cur = cur.right;
         }
