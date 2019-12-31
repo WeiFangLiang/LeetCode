@@ -10,13 +10,14 @@ package com.LeetCode.mid;
  */
 public class Solution50 {
 	//这是我写的，存在栈溢出问题。bug案例：x = 0.00001   n = 2147483647
-	//这个 n 设的这么大，就是让你用分治递归的，而不是傻乘
-	public static double myPow(double x, int n) {
+	//这个 n 设的这么大，就是让你用分治递归的，而不是傻乘          而且没考虑 n<0 的情况
+	public  double myPow1(double x, int n) {
         if(n < 2 ) return x;
         return x * myPow(x,--n); //傻乘
     }
-	//分治递归,先定义一个辅助函数
-	private static double fastPow(double x, long n) {
+	
+	//分治递归,先定义一个法2的辅助函数
+	private  double fastPow(double x, long n) {
         if (n == 0) {
             return 1.0;
         }
@@ -27,8 +28,8 @@ public class Solution50 {
             return half * half * x;
         }
     }
-
-	public static double myPow1(double x, int n) {
+	//法2  99.95%  72%
+	public  double myPow(double x, int n) {
 /**
  * 注意：
  * n = -n  是不能把 n 变为正数的！！，会死递归
@@ -36,15 +37,10 @@ public class Solution50 {
  * n = -n 赋值失败，n还是负数，就此无限递归调用自己
  */
 		long N = n;
-		if(N < 0) {
+		if(N < 0) { //如果是负次幂，转为正次幂的情况
 			x = 1/x;
 			N = -N;
 		}
 		return fastPow(x,N);
-	}
-	
-	public static void main(String[] args) {
-		double r = myPow1(1.00000,-2147483648);
-		System.out.println(r);
 	}
 }
