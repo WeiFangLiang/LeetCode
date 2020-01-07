@@ -1,57 +1,57 @@
 package com.LeetCode.hard;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * N皇后问题（不会）  52题自己做
- * 		剪枝，优化回溯算法
- * @author WeiFangLiang
- *
- */
 public class Solution51 {
-	public static List<String[]> solveNQueens(int n) {
-        List<String[]> res = new ArrayList<>();  //最终的结果集
-        helper(0,new boolean[n],new boolean[2*n],new boolean[2*n],new String[n],res);
+	//方法1：深度优先递归
+	public static List<List<String>> solveNQueens(int n) {
+		List<List<String>> res = new ArrayList<>();
+        if(n < 1) return res;
+        int[] queen = new int[n];
+        process(0, queen, n, res);
         return res;
     }
-	/**
-	 * 
-	 * @param r 层数，从0算起
-	 * @param cols 表示列的数组，皇后所在列记为true
-	 * @param d1 代表撇的数组
-	 * @param d2 代表捺的数组
-	 * @param board  一个board代表一种解法
-	 * @param res 结果集
-	 */
-	private static void helper(int r,boolean[] cols,boolean[] d1,boolean[] d2,String[] board,List<String[]> res) {
-		if (r == board.length) {//如果到了第n层，从0算起
-			res.add(board.clone());//就把上一层求的board加入结果集
-		}else {
-			for (int c = 0;c < board.length;c++) {
-				int id1 = r - c + board.length; //皇后所在的捺
-				int id2 = 2 * board.length - r - c - 1; //皇后所在的撇
-				if (!cols[c] && !d1[id1] && !d2[id2]) {
-					char[]  row = new char[board.length];
-					Arrays.fill(row, '.'); 
-					row[c] = 'Q';
-					board[r] = new String(row);
-					cols[c] = true; //皇后所在列置为true，表示不能在该列放其他皇后
-					d1[id1] = true;//皇后所在的捺置为true，同上
-					d2[id2] = true;//皇后所在的撇置为true，同上
-					helper(r+1,cols,d1,d2,board,res);
-					cols[c] = false;
-					d1[id1] = false;
-					d2[id2] = false;
-				}
+	//递归：逐行遍历棋盘。   queen数组：下标为行号，值为该皇后所在列的号
+	private static void process(int row, int[] queen, int n, List<List<String>> res) {
+		if(row == n) {//棋盘行数 0---n-1，row==n说明整个棋盘遍历完了 
+			List<String> subResult = new ArrayList<>(n);//代表一种正确解
+			for(int i = 0;i < n;i++) {//皇后的位置就在queen数组中，现在要根据queen数组还原放置皇后的棋盘图案
+                StringBuilder s = new StringBuilder();
+                for(int j = 0;j < n;j++) {
+                	if(j == queen[i]) {//如果遍历到该行皇后所在的列
+                		s.append('Q');
+                	}else {
+                		s.append('.');
+                	}
+                }
+                subResult.add(s.toString());//将该行的棋子图案加入
 			}
-		}		
+			res.add(subResult);
+			return ;
+		}
+		for(int col = 0; col < n;col++) {//遍历这一行的所有列
+			if(isValid(queen, row, col)) {
+				queen[row] = col;//这个位置可以放皇后，更新queen数组
+				process(row + 1, queen, n, res);
+			}
+		}
 	}
+
+	private static boolean isValid(int[] queen, int row, int col) {
+		for(int k = 0;k < row;k++) {//遍历row之前的每一行的皇后
+			//如果(row, col) 处于某个皇后的攻击范围
+			if(col == queen[k] || Math.abs(k - row) == Math.abs(queen[k] - col)) return false; 
+		}
+		return true;
+	}
+	
+	//-----------------------方法2：位运算加速
+	
 	public static void main(String[] args) {
-		List<String[]> res = solveNQueens(4);  //测试四皇后
-		Iterator<String[]> it = res.iterator();
+		List<List<String>> res = solveNQueens(4);  //测试四皇后
+		Iterator<List<String>> it = res.iterator();
 		while(it.hasNext()){
 			for(String ms : it.next()) {				
 				System.out.println(ms);
