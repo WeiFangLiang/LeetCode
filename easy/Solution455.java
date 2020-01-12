@@ -9,8 +9,8 @@ import java.util.Arrays;
  */
 public class Solution455 {
 	public int findContentChildren(int[] g, int[] s) {
-		Arrays.parallelSort(g);
-		Arrays.parallelSort(s);
+		Arrays.sort(g);
+		Arrays.sort(s);
 		//1,2   1,2,3
 		int i = 0;//孩子数组的下标
 		int j = 0;//饼干数组的下标
