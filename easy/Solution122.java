@@ -8,23 +8,13 @@ package com.LeetCode.easy;
  *
  */
 public class Solution122 {
-	//贪心算法
-	public static int maxProfit(int[] prices) {
-		int ru = 0;
-		int chu = 0;
-		int count = 0;
-        for(int i = 1;i < prices.length;i++) {
-        	if(prices[i] > prices[i-1]) {
-        		ru = i-1;
-        		chu = i;
-        		count = count + (prices[chu] - prices[ru]); 
-        	}
+	public int maxProfit(int[] prices) {
+        int maxprofit = 0;
+        //遍历数组，只要当天的价格相对于昨天是上涨的，那就卖出，计算利润
+        for (int i = 1; i < prices.length; i++) {
+            if (prices[i] > prices[i - 1])
+                maxprofit += prices[i] - prices[i - 1];
         }
-        return count;
+        return maxprofit;
     }
-	public static void main(String[] args) {
-		int[] prices = {1,2,3,4,5};
-		int count = maxProfit(prices);
-		System.out.println(count);
-	}
 }
