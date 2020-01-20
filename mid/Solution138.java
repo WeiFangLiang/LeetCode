@@ -1,13 +1,13 @@
 package com.LeetCode.mid;
 
-class Node {
+class DDNode {
     public int val;
-    public Node next;
-    public Node random;
+    public DDNode next;
+    public DDNode random;
 
-    public Node() {}
+    public DDNode() {}
 
-    public Node(int _val,Node _next,Node _random) {
+    public DDNode(int _val,DDNode _next,DDNode _random) {
         val = _val;
         next = _next;
         random = _random;
@@ -16,12 +16,12 @@ class Node {
 
 //powcai的思路三
 public class Solution138 {
-	public Node copyRandomList(Node head) {
+	public DDNode copyRandomList(DDNode head) {
 		if(head == null) return null;
-		Node cur = head;
+		DDNode cur = head;
 		while(cur != null) {  //原链表基础上，每个节点后面添加同值的节点
-			Node temp = cur.next;
-			cur.next = new Node(cur.val,null,null);
+			DDNode temp = cur.next;
+			cur.next = new DDNode(cur.val,null,null);
 			cur.next.next = temp;
 			cur = temp;
 		}
@@ -33,8 +33,8 @@ public class Solution138 {
 		}
 		//拆分
 		cur = head;
-		Node copy_head = cur.next;
-		Node copy_cur = copy_head;
+		DDNode copy_head = cur.next;
+		DDNode copy_cur = copy_head;
 		while(copy_cur.next != null) {
 			cur.next = cur.next.next;
 			cur = cur.next;
